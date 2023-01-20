@@ -2,7 +2,7 @@ import * as React from 'react';
 // import {useColorScheme} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import HomeScreen from './pages/home';
+import HomeScreen from './src/pages/home';
 const Stack = createStackNavigator();
 
 export default function App() {
