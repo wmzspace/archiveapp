@@ -22,9 +22,8 @@ import {View, Text, Image} from 'react-native';
 // import logo  from '../../public/logo.svg';
 // import ConnectButton from './ConnectButton';
 
-export interface INavbarProps {}
-
-const Navbar: React.FunctionComponent<INavbarProps> = props => {
+const Navbar = props => {
+  // const Navbar: React.FunctionComponent<INavbarProps> = props => {
   // const {isOpen, onOpen, onClose} = useDisclosure();
   // const menuRef = useRef<any>();
   // const {colorMode, toggleColorMode} = useColorMode();
@@ -33,12 +32,14 @@ const Navbar: React.FunctionComponent<INavbarProps> = props => {
   return (
     <View
       style={{
-        padding: '2rem 4rem',
+        padding: 3,
+        // padding: '2rem 4rem',
         // background : "whiteAlpha.100",
         alignItems: 'center',
         justifyContent: 'space-between',
         // bg : "blackAlpha.400",
-        width: '100vw',
+        // width: '100vw',
+        width: 100,
       }}>
       {/*<View style={{alignItems: 'center', gap : '1.5rem'}}>*/}
       <View style={{alignItems: 'center'}}>
@@ -53,7 +54,7 @@ const Navbar: React.FunctionComponent<INavbarProps> = props => {
           // alignItems="center"
           // justifyContent="center"
         >
-          <Image source={require('../../public/logo.svg')} alt="logo" />
+          {/*<Image source={require('../../public/logo.svg')} alt="logo" />*/}
         </View>
         <View
         // as="h1"
@@ -73,7 +74,7 @@ const Navbar: React.FunctionComponent<INavbarProps> = props => {
             }}>
             Archive
           </Text>
-          .com
+          <Text>.com</Text>
         </View>
       </View>
       <View style={{alignItems: 'center'}}>
