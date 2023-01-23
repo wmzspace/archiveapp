@@ -22,7 +22,7 @@ export const SignerContextProvider = ({children}: {children: ReactNode}) => {
   useEffect(() => {
     // const web3modal = new Web3Modal();
     // if (web3modal.cachedProvider) {
-    //   connectWallet();
+    // connectWallet();
     // }
     // window.ethereum.on('accountsChanged', connectWallet);
   }, []);

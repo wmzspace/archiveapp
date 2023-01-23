@@ -1,0 +1,31 @@
+  const fetchData = async () => {
+    console.log('start');
+    let url =
+    'https://ipfs.io/ipfs/bafyreiaapghuktnjhw72elunmd7fyjta6rfytoqa27ruunlweexv57tcf4/metadata.json';
+    fetch(url, { method: "GET" }).then(res => {
+      if (res.ok) {
+        res.json().then(data => {
+          console.log(data)
+        })
+    }})
+  };
+
+
+
+    const fetchMetaData = async () => {
+      let url =
+        'https://ipfs.io/ipfs/bafyreiaapghuktnjhw72elunmd7fyjta6rfytoqa27ruunlweexv57tcf4/metadata.json';
+      // 'https://restapi.amap.com/v3/geocode/regeo?output=json&location=100,100&key=85f6fcd6b806ec2b69e4711119d949ed&radius=1000&extensions=all';
+      // const metaDataResponse = await fetch(convertIpfsToHttps(nft.tokenURI));
+      const metaDataResponse = await fetch(url);
+      if (metaDataResponse.status !== 200) {
+        return;
+      }
+      const json = await metaDataResponse.json();
+      console.log(json);
+      // setMetaData({
+      //   name: json.name,
+      //   description: json.description,
+      //   imageURL: convertIpfsToHttps(json.image),
+      // });
+    };
