@@ -3,8 +3,18 @@ import * as React from 'react';
 
 import HomeScreen from './src/pages/home';
 import GalleryScreen from './src/pages/gallery';
-import {Router, Scene, Stack} from 'react-native-router-flux';
-
+import {
+  Scene,
+  Router,
+  Actions,
+  ActionConst,
+  Overlay,
+  Tabs,
+  Modal,
+  Drawer,
+  Stack,
+  Lightbox,
+} from 'react-native-router-flux';
 // import {NavigationContainer} from '@react-navigation/native';
 // import {createStackNavigator} from '@react-navigation/stack';
 // const Stack = createStackNavigator();
@@ -81,6 +91,7 @@ import {Router, Scene, Stack} from 'react-native-router-flux';
 //   );
 // }
 
+import {StackViewStyleInterpolator} from 'react-navigation-stack';
 import Navbar from './src/components/Navbar';
 import {SignerContextProvider} from './src/context/SignerContext';
 import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
@@ -95,7 +106,15 @@ const apolloClient = new ApolloClient({
   uri: 'https://api.studio.thegraph.com/query/40910/archive/0.0.1',
 });
 
-const App = () => (
+const stateHandler = (prevState, newState, action) => {
+  console.log('onStateChange: ACTION:', action);
+};
+
+const transitionConfig = () => ({
+  screenInterpolator: StackViewStyleInterpolator.forFadeFromBottomAndroid,
+});
+
+const App: any = () => (
   <ScrollView style={{margin: 10}}>
     <SignerContextProvider>
       <ApolloProvider client={apolloClient}>
@@ -104,8 +123,6 @@ const App = () => (
         {/*<Router>*/}
         {/*  <Stack key="root">*/}
         {/*    <Scene key="gallery" component={GalleryScreen} title="Login" />*/}
-        {/*    /!*<Scene key="register" component={Register} title="Register" />*!/*/}
-        {/*    /!*<Scene key="home" component={Home} />*!/*/}
         {/*  </Stack>*/}
         {/*</Router>*/}
       </ApolloProvider>
