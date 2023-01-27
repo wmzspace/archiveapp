@@ -2,17 +2,26 @@ import * as React from 'react';
 // import {useColorScheme} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import HomeScreen from './src/pages/home';
 const Stack = createStackNavigator();
+import HomeScreen from './src/pages/home';
+import GalleryScreen from './src/pages/gallery';
 
 export default function App() {
-  console.log('start');
+  // console.log('start');
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen
           name="Home"
           component={HomeScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="Gallery"
+          component={GalleryScreen}
           options={{
             headerShown: false,
           }}

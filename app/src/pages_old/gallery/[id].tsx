@@ -1,23 +1,4 @@
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Card,
-  CardBody,
-  CardFooter,
-  Divider,
-  Flex,
-  Heading,
-  Image,
-  Stack,
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-} from '@chakra-ui/react';
 import React, {useState, useEffect} from 'react';
-import {useRouter} from 'next/router';
 
 export interface IDetailPageProps {}
 

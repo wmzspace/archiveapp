@@ -16,7 +16,13 @@ const GalleryPage: React.FunctionComponent<IGalleryPageProps> = props => {
   const isLoading = signer && !listedNFTs;
 
   return (
-    <View style={{flex: 1, flexDirection: 'column', alignItems: 'center',overflow:'scroll'}}>
+    <View
+      style={{
+        flex: 1,
+        flexDirection: 'column',
+        alignItems: 'center',
+        overflow: 'scroll',
+      }}>
       <Text>All NFTs for sale 🕶 - {listedNFTs?.length}</Text>
       {/*<View style={{flex: 1, flexWrap: 'wrap', padding: 10}}>*/}
       {!isLoading &&
