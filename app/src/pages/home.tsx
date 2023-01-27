@@ -23,9 +23,6 @@ function Home(): JSX.Element {
           {/*<Navbar />*/}
           <GalleryPage />
         </ApolloProvider>
-        {/*<View>*/}
-        {/*<Text>HelloWorld</Text>*/}
-        {/*</View>*/}
       </SignerContextProvider>
     </ScrollView>
   );
