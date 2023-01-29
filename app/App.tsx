@@ -3,17 +3,27 @@ import * as React from 'react';
 
 import HomeScreen from './src/pages/home';
 import GalleryScreen from './src/pages/gallery';
-import {NavigationContainer} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  DefaultTheme,
+  DarkTheme,
+} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import Navbar from './src/components/Navbar';
 import {SignerContextProvider} from './src/context/SignerContext';
 import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
-import {ScrollView} from 'react-native';
-import GalleryPage from './src/pages/gallery';
+import {ScrollView, useColorScheme, View} from 'react-native';
+
+import {
+  Provider as PaperProvider,
+  useTheme,
+  MD3LightTheme,
+  adaptNavigationTheme,
+} from 'react-native-paper';
+const {LightTheme} = adaptNavigationTheme({reactNavigationLight: DefaultTheme});
 
 const GRAPH_URL = process.env.NEXT_PUBLIC_GRAPH_URL as string;
-
 const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
   // uri: GRAPH_URL,
@@ -25,88 +35,110 @@ const stateHandler = (prevState, newState, action) => {
 };
 
 const Stack = createStackNavigator();
-function App() {
+// const Tab = createBottomTabNavigator();
+import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
+const Tab = createMaterialBottomTabNavigator();
+
+// import {MaterialCommunityIcons} from '@expo/vector-icons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
+import globalStyles from './globalStyles';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {StatusBarComp} from './src/components/StatusBarComp';
+import UploadScreen from './src/pages/upload';
+
+const App: any = () => {
   // console.log('start');
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            headerShown: false,
-          }}
-        />
+    <PaperProvider theme={{version: 3}}>
+      {/*theme={MD3LightTheme}*/}
+      <View style={globalStyles.container}>
+        <StatusBarComp />
+        <SignerContextProvider>
+          <ApolloProvider client={apolloClient}>
+            <NavigationContainer>
+              {/*<NavigationContainer theme={LightTheme}>*/}
+              <Tab.Navigator initialRouteName="Gallery" barStyle={{height: 70}}>
+                {/*<Tab.Navigator initialRouteName="Gallery">*/}
+                <Tab.Screen
+                  name="Gallery"
+                  component={GalleryScreen}
+                  options={{
+                    // headerShown: false,
+                    title: 'Gallery',
+                    // headerTitleAlign: 'center',
+                    // headerStyle: [
+                    // useColorScheme() === 'dark' ?
+                    // ],
+                    tabBarLabel: 'Home',
+                    tabBarBadge: '6',
 
-        <Stack.Screen
-          name="Gallery"
-          component={GalleryScreen}
-          options={{
-            headerShown: false,
-          }}
-        />
-        {/*<Stack.Screen*/}
-        {/*  name="Signup"*/}
-        {/*  component={SignupScreen}*/}
-        {/*  options={{*/}
-        {/*    title: '注册账号',*/}
-        {/*    headerTitleAlign: 'center',*/}
-        {/*    headerStyle: [*/}
-        {/*      useColorScheme() === 'dark'*/}
-        {/*        ? styles.darkBackgroundColor*/}
-        {/*        : styles.lightBackgroundColor,*/}
-        {/*    ],*/}
-        {/*    headerTintColor: useColorScheme() === 'dark' ? '#ffffff' : 'black',*/}
-        {/*  }}*/}
-        {/*/>*/}
-        {/*<Stack.Screen*/}
-        {/*  name="Login"*/}
-        {/*  component={LoginScreen}*/}
-        {/*  options={{*/}
-        {/*    title: '登录账号',*/}
-        {/*    headerTitleAlign: 'center',*/}
-        {/*    headerStyle: [*/}
-        {/*      useColorScheme() === 'dark'*/}
-        {/*        ? styles.darkBackgroundColor*/}
-        {/*        : styles.lightBackgroundColor,*/}
-        {/*      {borderWidth: 0},*/}
-        {/*    ],*/}
-        {/*    headerTitleStyle: {borderColor: 'white', borderWidth: 0},*/}
-        {/*    headerTintColor: useColorScheme() === 'dark' ? '#ffffff' : 'black',*/}
-        {/*  }}*/}
-        {/*/>*/}
-        {/*<Stack.Screen*/}
-        {/*  name="Main"*/}
-        {/*  component={MainScreen}*/}
-        {/*  options={{*/}
-        {/*    // headerShown: false,*/}
-
-        {/*    title: 'Yechat',*/}
-        {/*    headerTitleAlign: 'center',*/}
-        {/*    headerStyle: [*/}
-        {/*      useColorScheme() === 'dark'*/}
-        {/*        ? styles.darkBackgroundColor*/}
-        {/*        : styles.lightBackgroundColor,*/}
-        {/*      {borderWidth: 0},*/}
-        {/*    ],*/}
-        {/*    headerTitleStyle: {borderColor: 'white', borderWidth: 0},*/}
-        {/*    headerTintColor: useColorScheme() === 'dark' ? '#ffffff' : 'black',*/}
-        {/*  }}*/}
-        {/*/>*/}
-      </Stack.Navigator>
-    </NavigationContainer>
+                    tabBarIcon: ({color}) => (
+                      <MaterialCommunityIcons
+                        name="home"
+                        color={color}
+                        size={20}
+                      />
+                    ),
+                  }}
+                />
+                <Tab.Screen
+                  name="Upload"
+                  component={UploadScreen}
+                  options={{
+                    // headerShown: false,
+                    title: 'Upload',
+                    // headerTitleStyle: {color: 'red'},
+                    // headerTitleAlign: 'center',
+                    // headerStyle: [
+                    // useColorScheme() === 'dark' ?
+                    // ],
+                    // headerTintColor:
+                    tabBarIcon: ({color}) => (
+                      <MaterialCommunityIcons
+                        name="upload"
+                        color={color}
+                        size={20}
+                      />
+                    ),
+                  }}
+                />
+              </Tab.Navigator>
+            </NavigationContainer>
+          </ApolloProvider>
+        </SignerContextProvider>
+      </View>
+    </PaperProvider>
   );
-}
-
-// const App: any = () => (
-//   <ScrollView style={{margin: 10}}>
-//     <SignerContextProvider>
-//       <ApolloProvider client={apolloClient}>
-//         <GalleryScreen />
-//         {/*<Navbar />*/}
-//       </ApolloProvider>
-//     </SignerContextProvider>
-//   </ScrollView>
-// );
+};
 
 export default App;
+//
+// <Stack.Navigator initialRouteName="Gallery">
+//     <Stack.Screen
+//         name="Home"
+//         component={HomeScreen}
+//         options={{
+//             headerShown: true,
+//             title: 'Gallery',
+//             headerTitleAlign: 'center',
+//             headerStyle: [
+//                 // useColorScheme() === 'dark' ?
+//             ],
+//             // headerTintColor:
+//         }}
+//     />
+//
+//     <Stack.Screen
+//         name="Gallery"
+//         component={GalleryScreen}
+//         options={{
+//             headerShown: false,
+//             title: 'Gallery',
+//             headerTitleAlign: 'center',
+//             headerStyle: [
+//                 // useColorScheme() === 'dark' ?
+//             ],
+//         }}
+//     />
+// </Stack.Navigator>

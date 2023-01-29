@@ -17,14 +17,9 @@ const apolloClient = new ApolloClient({
 function Home(): JSX.Element {
   // console.log('start');
   return (
-    <ScrollView style={{margin: 10}}>
-      <SignerContextProvider>
-        <ApolloProvider client={apolloClient}>
-          {/*<Navbar />*/}
-          <GalleryPage />
-        </ApolloProvider>
-      </SignerContextProvider>
-    </ScrollView>
+    <View>
+      <GalleryPage />
+    </View>
   );
 }
 export default Home;
