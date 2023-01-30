@@ -11,7 +11,6 @@ const LeftContent = props => <Avatar.Icon {...props} icon="folder" />;
 
 function SettingsScreen(): JSX.Element {
   const {toggleTheme, isThemeDark} = React.useContext(PreferencesContext);
-
   const {signer} = useSignerContext();
   // const {listedNFTs} = useArchiveMarket();
   const {listedNFTs} = useArchiveMarket();

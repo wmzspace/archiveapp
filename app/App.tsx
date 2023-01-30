@@ -36,41 +36,17 @@ import {
   Provider as PaperProvider,
 } from 'react-native-paper';
 
-import globalStyles from './globalStyles';
+import globalStyles from './src/global/globalStyles';
 
 import GalleryScreen from './src/pages/gallery';
 import UploadScreen from './src/pages/upload';
 import SettingsScreen from './src/pages/settings';
-import lightTheme from 'web3modal/dist/themes/light';
+import {CombinedDarkTheme, CombinedDefaultTheme} from './src/utils/theme';
+import useArchiveMarket from './src/hooks/useArchiveMarket';
+import useListedNFTs from './src/hooks/useListedNFTs';
+import globalConstants from './src/global/globalConstants';
 
 const App: any = () => {
-  const CombinedDefaultTheme = {
-    ...MD2LightTheme,
-    ...NavigationDefaultTheme,
-    colors: {
-      ...MD2LightTheme.colors,
-      ...NavigationDefaultTheme.colors,
-    },
-  };
-  const CombinedDarkTheme = {
-    ...MD2DarkTheme,
-    ...NavigationDarkTheme,
-    colors: {
-      ...MD2DarkTheme.colors,
-      ...NavigationDarkTheme.colors,
-    },
-  };
-
-  const OverrideCombineDarkTheme = {
-    ...MD2DarkTheme,
-    ...NavigationDarkTheme,
-    colors: {
-      ...MD2DarkTheme.colors,
-      ...NavigationDarkTheme.colors,
-      primary: '#ffffff',
-    },
-  };
-
   const [isThemeDark, setIsThemeDark] = React.useState(false);
 
   let theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme;
@@ -112,7 +88,9 @@ const App: any = () => {
                       // useColorScheme() === 'dark' ?
                       // ],
                       tabBarLabel: 'Home',
-                      tabBarBadge: '6',
+                      tabBarBadge: globalConstants.tabBarBadgeHome
+                        ? globalConstants.tabBarBadgeHome
+                        : '?',
 
                       tabBarIcon: ({color, size}) => (
                         <MaterialCommunityIcons

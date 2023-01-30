@@ -7,56 +7,61 @@ import {
   ScrollView,
   RefreshControl,
   TouchableHighlight,
+  Dimensions,
 } from 'react-native';
-import PlaceHolder from '../components/Placeholder';
-// import {Box, Divider, Flex, Heading, Skeleton, Stack} from '@chakra-ui/react';
-import {convertIpfsToHttps} from '../utils/helper';
-import globalStyles from '../../globalStyles';
-import {StatusBarComp} from '../components/StatusBarComp';
-// import {Provider as PaperProvider, useTheme} from 'react-native-paper';
-import {Avatar, Button, Card, Text} from 'react-native-paper';
+
+import {Avatar, Button, Card, Text, Appbar} from 'react-native-paper';
 import {wait} from '@apollo/client/testing';
 import RNRestart from 'react-native-restart';
+import {PreferencesContext} from '../context/PreferencesContext';
+import globalConstants from '../global/globalConstants';
+
 export interface IGalleryPageProps {}
-const LeftContent = props => <Avatar.Icon {...props} icon="folder" />;
 
 function GalleryScreen(): JSX.Element {
   const {signer} = useSignerContext();
   const {listedNFTs} = useArchiveMarket();
   const isLoading = signer && !listedNFTs;
+  const {toggleTheme, isThemeDark} = React.useContext(PreferencesContext);
   const [refreshing, setRefreshing] = React.useState(false);
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     wait(1000).then(() => {
       RNRestart.Restart();
       setRefreshing(false);
-
-      // let a = useListedNFTs();
-      // navigation.navigate('Gallery');
-      // navigation.navigate('Settings');
     });
   }, []);
 
+  globalConstants.tabBarBadgeHome = listedNFTs?.length;
   return (
     <ScrollView
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }>
-      {refreshing ? undefined : (
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'column',
-            alignItems: 'center',
-            overflow: 'scroll',
-            paddingTop: 20,
-          }}>
-          <Text>All NFTs for sale 🕶 - {listedNFTs?.length}</Text>
+      <Appbar.Header>
+        {/*<Appbar.BackAction onPress={() => {}} />*/}
+        <Appbar.Content title="Home" style={{paddingLeft: '42%'}} />
+        <Appbar.Action
+          icon="theme-light-dark"
+          onPress={() => {
+            toggleTheme();
+          }}
+        />
+        <Appbar.Action icon="magnify" onPress={() => {}} />
+      </Appbar.Header>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'column',
+          alignItems: 'center',
+          overflow: 'scroll',
+          paddingTop: 20,
+        }}>
+        <Text>All NFTs for sale 🕶 - {listedNFTs?.length}</Text>
 
-          {!isLoading &&
-            listedNFTs?.map(nft => <GalleryCard key={nft.id} nft={nft} />)}
-        </View>
-      )}
+        {!isLoading &&
+          listedNFTs?.map(nft => <GalleryCard key={nft.id} nft={nft} />)}
+      </View>
     </ScrollView>
   );
 }
