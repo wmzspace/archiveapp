@@ -3,21 +3,20 @@ import useSignerContext from '../context/SignerContext';
 import useArchiveMarket from '../hooks/useArchiveMarket';
 import React from 'react';
 import {View, ScrollView} from 'react-native';
-import PlaceHolder from '../components/Placeholder';
-// import {Box, Divider, Flex, Heading, Skeleton, Stack} from '@chakra-ui/react';
-import {convertIpfsToHttps} from '../utils/helper';
-import globalStyles from '../../globalStyles';
-import {StatusBarComp} from '../components/StatusBarComp';
-// import {Provider as PaperProvider, useTheme} from 'react-native-paper';
-import {Avatar, Button, Card, Text} from 'react-native-paper';
+
+import {Avatar, Button, Card, Switch, Text} from 'react-native-paper';
+import {PreferencesContext} from '../context/PreferencesContext';
 export interface IGalleryPageProps {}
 const LeftContent = props => <Avatar.Icon {...props} icon="folder" />;
 
 function UploadScreen(): JSX.Element {
+  const {toggleTheme, isThemeDark} = React.useContext(PreferencesContext);
+
   const {signer} = useSignerContext();
   // const {listedNFTs} = useArchiveMarket();
   const {listedNFTs} = useArchiveMarket();
   const isLoading = signer && !listedNFTs;
+
   return (
     <ScrollView>
       <View style={{paddingTop: 30}}>
@@ -37,6 +36,7 @@ function UploadScreen(): JSX.Element {
             <Button>Ok</Button>
           </Card.Actions>
         </Card>
+        <Switch color={'red'} value={isThemeDark} onValueChange={toggleTheme} />
       </View>
     </ScrollView>
   );

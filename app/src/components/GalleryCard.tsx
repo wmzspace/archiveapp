@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {convertIpfsToHttps, shortenAddress} from '../utils/helper';
 import {NFT, NFTMetaData} from '../utils/type';
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import {View, Image, TouchableOpacity} from 'react-native';
+import {Text} from 'react-native-paper';
 import useSignerContext from '../context/SignerContext';
 import useArchiveMarket from '../hooks/useArchiveMarket';
 
