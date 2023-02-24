@@ -6,21 +6,40 @@ import {View, ScrollView, Alert} from 'react-native';
 
 import {Avatar, Button, Card, Switch, Text} from 'react-native-paper';
 import {PreferencesContext} from '../context/PreferencesContext';
+
 export interface IGalleryPageProps {}
+
 const LeftContent = props => <Avatar.Icon {...props} icon="folder" />;
 
-const testFetch = () => {
-  fetch('https://waa.cool/post', {
+/*
+ * http://waa.cool:4000/app/saleown
+ * http://waa.cool:4000/app/saleuse
+ * http://waa.cool:4000/app/login
+ * */
+
+const usrLogin = () => {
+  fetch('http://waa.cool:4000/app/login', {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    // body: 'email=123@qq.com&password=123456',
+    body: JSON.stringify({
+      email: '123@qq.com',
+      password: '123456',
+    }),
   })
     .then(res => {
-      if (!res.ok) {
-        Alert.alert('res error!');
-      } else {
-        res.json().then(data => {
-          console.log(data);
-        });
-      }
+      /*      if (!res.ok) {
+              Alert.alert('res error!');
+            } else {
+              res.json().then(data => {
+                console.log(data);
+              });
+            }*/
+      res.json().then(data => {
+        console.log(data);
+      });
     })
     .catch(e => {
       console.log(e);
@@ -37,7 +56,7 @@ function SettingsScreen(): JSX.Element {
   return (
     <ScrollView>
       <View style={{paddingTop: 30}}>
-        <Button onPress={testFetch}>Test</Button>
+        <Button onPress={usrLogin}>Log in</Button>
       </View>
     </ScrollView>
   );
